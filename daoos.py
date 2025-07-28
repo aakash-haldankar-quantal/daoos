@@ -25,10 +25,12 @@ def _load_env():
 
 _load_env()
 
-
-OPENAI_API_KEY   = os.getenv("OPENAI_API_KEY")
-NOTION_MCP_TOKEN = os.getenv("NOTION_MCP_TOKEN")
+CLAUDE_API_KEY = os.getenv("CLAUDE_API_KEY")
+NOTION_MCP_TOKEN = os.getenv("NOTION_MCP_TOKEN")     
 NOTION_VERSION   = "2022-06-28"
+
+# if not CLAUDE_API_KEY or not NOTION_MCP_TOKEN:
+#     raise RuntimeError("Set CLAUDE_API_KEY and NOTION_MCP_TOKEN in env.")
 
 notion_cfg = {
     "notion": {
@@ -196,15 +198,15 @@ async def build_app():
     client = MultiServerMCPClient(notion_cfg)
     tools = await client.get_tools()
     
-    # llm   = ChatAnthropic(model="claude-3-5-sonnet-20241022",
-    #                       api_key=CLAUDE_API_KEY, temperature=0.1
-    #                      ).bind_tools(tools)
+    llm   = ChatAnthropic(model="claude-3-5-sonnet-20241022",
+                          api_key=CLAUDE_API_KEY, temperature=0.1
+                         ).bind_tools(tools)
     
-    llm = ChatOpenAI(
-        model="gpt-4o",
-        api_key=OPENAI_API_KEY,
-        temperature=0.1,
-    ).bind_tools(tools)
+    # llm = ChatOpenAI(
+    #     model="gpt-4o",
+    #     api_key=OPENAI_API_KEY,
+    #     temperature=0.1,
+    # ).bind_tools(tools)
     
     node  = ToolNode(tools)
 
