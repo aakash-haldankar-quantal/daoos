@@ -30,9 +30,6 @@ OPENAI_API_KEY   = os.getenv("OPENAI_API_KEY")
 NOTION_MCP_TOKEN = os.getenv("NOTION_MCP_TOKEN")
 NOTION_VERSION   = "2022-06-28"
 
-if not CLAUDE_API_KEY or not NOTION_MCP_TOKEN:
-    raise RuntimeError("Set CLAUDE_API_KEY and NOTION_MCP_TOKEN in env.")
-
 notion_cfg = {
     "notion": {
         "command": "npx",
